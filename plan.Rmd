@@ -4,3 +4,7 @@ output: html_notebook
 ---
 
 Here's my plan.
+
+This is step 1: clean data
+
+
