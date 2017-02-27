@@ -15,3 +15,7 @@ str(data_selected)
 dim(data_selected)
 summary(data_selected)
 ```
+```{r}
+
+```
+
