@@ -1,0 +1,17 @@
+---
+title: "Step 1-clean data"
+output: html_notebook
+---
+
+```{r}
+library(readxl)
+data_selected <- read_excel("~/Documents/NYU/Spring 2017/Data Science/data_selected.xlsx")
+```
+
+Briefly look at the data
+```{r}
+head(data_selected)
+str(data_selected)
+dim(data_selected)
+summary(data_selected)
+```
