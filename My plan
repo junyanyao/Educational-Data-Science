@@ -1,0 +1,21 @@
+My plan
+
+General questions:
+What is this person trying to do, and why?
+I am trying to evalute the impact of economics growth on the higher education expansion. For example, will higher education is likely to occur in a county with higher foreign direct investment per capita?
+
+What have they done so far?
+So far I have otained the dataset (both higher education dataset and economics dataset) and merged by zipcode for China's higher education expansion study;
+
+What are they working on?
+I am not sure if my merge makes sense(I merged twice, the first time merged by Zipcode, the second time to merge by population1990). It looks a little bit messy.Needs to take a deep into it.I am not sure how to do the merge (many-many)in R. I did the merge many to many using Stata. But I prefer to do it in R.
+
+How much progress are they making? Have they hit a snag? 
+
+Have they left out something important from consideration?
+
+The next step:
+This week:Check the merge results;
+Next week: primary analysis;
+
+
