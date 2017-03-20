@@ -19,3 +19,10 @@ This week:Check the merge results;
 Next week: primary analysis;
 
 
+<<<<<<< HEAD
+=======
+Update on March 19.2017
+I am checking the potential clustering solution. 
+Kmeans did not work well, But the complete/single/ ward methods works well
+
+>>>>>>> a32cb3731b5cdd09bb11a56e3da690e2e471b025
