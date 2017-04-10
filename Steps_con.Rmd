@@ -130,8 +130,21 @@ print(summary(M1))
 #print(summary(M2))
 
 #library(glmmML)
-M2<- glmmboot(lpoptota+lfditota+l.gdptota+empavea,dcampus, family= binomial(link="logit"), data=prefecture, cluster=cityid)
+#M2<- glmmboot(lpoptota+lfditota+l.gdptota+empavea,dcampus, family= binomial(link="logit"), data=prefecture, cluster=cityid)
 ```
 
+########################################################################
+              Urban Core Analysis
+########################################################################
+
+```{r}
+#generate log values of variables(rescale)
+lpoptotc<- log(urban$poptotc)
+lfditotc<- log(urban$fditotc/urban$gdpdef)
+l.gdptotc<- log(urban$gdptotc/urban$gdpdef)
+urban<- cbind(urban, lpoptotc, lfditotc, l.gdptotc)
+M3<- plm(ncampus ~ lpoptotc+lfditotc+l.gdptotc+empavec, data=urban,index=c("cityid", "year"), model="within")
+print(summary(M3))
+```
 
 
