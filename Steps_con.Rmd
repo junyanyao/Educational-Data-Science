@@ -16,13 +16,11 @@ total<- merge(edat, dat, by=c("cityid", "year"), all.x=TRUE, all.y=TRUE)
 
 Briefly look at the data
 ```{r}
-dim(edat)
-dim(dat)
-
 #explore panel data
 library(gplots)
 plotmeans(ncampus~year, main="Number of campuses in China 1985-2011", bars= FALSE, n.label= FALSE, data=total)
 #plotmeans(ncampus~provid|year==2010, main="Number of campuses in China 1985-2011", n.label= FALSE, data=dat)
+
 ```
 
 Now we want to take a look at the 2010 year of data only.
@@ -31,34 +29,35 @@ Now we want to take a look at the 2010 year of data only.
 
 #create subset
 
-only2010<- total[which(total$year==2010),]
+#only2010<- total[which(total$year==2010),]
 
 
 
 #drop unnecessary variables
-only2010<- only2010[c(-3,-4,-5,-8,-9,-13,-14,-15,-16,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-43,-44,-45)]
-dim(only2010)
+#only2010<- only2010[c(-3,-4,-5,-8,-9,-13,-14,-15,-16,-30,-31,-32,-33,-34,-35,-36,-37,-38,-39,-40,-41,-43,-44,-45)]
+#dim(only2010)
 
 #Sort the variables order
-only2010<-only2010[,c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39)]
-only2010<-only2010[,c(1,2,3,4,5,6,8,10,12,14,16,19,7,9,11,13,15,17,18,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39)]
+#only2010<-only2010[,c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39)]
+#only2010<-only2010[,c(1,2,3,4,5,6,8,10,12,14,16,19,7,9,11,13,15,17,18,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39)]
 
 
-plotmeans(ncampus~provid.x,bars=FALSE, main="Number of campuses in China 2010, by province", data=only2010)
+#plotmeans(ncampus~provid.x,bars=FALSE, main="Number of campuses in China 2010, by province", data=only2010)
 
-aggregate(ncampus ~ citycat, data=only2010, mean)
+#aggregate(ncampus ~ citycat, data=only2010, mean)
  
-aggregate(ncampus ~ provid.x, data=only2010, mean)
+#aggregate(ncampus ~ provid.x, data=only2010, mean)
 
 
 ```
 
-#Primary analysis of demographic features
+#Prelimary analysis of demographic features
 
 ```{r}
-par(mfrow=c(1,2))
-plot(density(only2010$poptota))
-plot(density(only2010$poptotc))
+####not run####
+#par(mfrow=c(1,2))
+#plot(density(only2010$poptota))
+#plot(density(only2010$poptotc))
 #obviously the poptota has more density.
 
 #plot(density(only2011$gdpcapa))
@@ -67,9 +66,7 @@ plot(density(only2010$poptotc))
 
 
 #look at the population spread (bivariate relationship), not obvious founding
-pairs(only2010[,11:12],pch=16)
-
-
+#pairs(only2010[,11:12],pch=16)
 ```
 
 
@@ -95,10 +92,15 @@ table(edat$citycat)
 
 ##############################
 
-
+#not run
 #create subsets for prefecture level and urban core
-prefecture<- total[which(citycateg==0),]
-urban<- total[which(citycateg==1),]
+#prefecture<- total[which(total$citycateg==0),]
+#urban<- total[which(total$citycateg==1),]
+
+#or create subset using urban variable
+pref<- total[which(total$urban==0),]
+urb<-total[which(total$urban==1),]
+
 ```
 
 ####################################################################
@@ -110,27 +112,70 @@ urban<- total[which(citycateg==1),]
 #library(dplyr)
 #prefecture %>% group_by(provcat,year) %>% summarise(Length = n())
 
+
 #generate log values of variables(rescale)
-lpoptota<- log(prefecture$poptota)
-lfditota<- log(prefecture$fditota/prefecture$gdpdef)
-l.gdptota<- log(prefecture$gdptota/prefecture$gdpdef)
-prefecture<- cbind(prefecture, lpoptota, lfditota, l.gdptota)
+l.poptota<- log(pref$poptota)
+pref$fditota[pref$fditota==0]<- NA
+l.fditota<- log(pref$fditota/pref$gdpdef)
+l.gdptota<- log(pref$gdptota/pref$gdpdef)
+l.empavea<- log(pref$empavea/pref$gdpdef)
+
+#generate quartic terms of variables
+psqua<- l.poptota*l.poptota
+fsqua<- l.fditota*l.fditota
+gsqua<- l.gdptota*l.gdptota
+esqua<-pref$empavea*pref$empavea
+
+pref<- cbind(pref, l.poptota, l.fditota, l.gdptota,l.empavea, psqua, fsqua,gsqua,esqua)
+
+#look at the bivariate relationship for variables.
+plot(pref$ncampus~pref$l.poptota, xlab="log of population in the prefecture level", ylab = "number of campuses in the prefecture level")
+
+plot(pref$ncampus~pref$l.gdptota, xlab="log of real GDP per capita in the prefecture level", ylab = "number of campuses in the prefecture level")
+temp<-loess(pref$ncampus~pref$l.gdptota)
+j<-order(pref$l.gdptota)
+lines(pref$l.gdptota[j],temp$fitted[j],col="red")
+
+
+plot(pref$ncampus~pref$empavea, xlab="Average wage in the prefecture level", ylab = "number of campuses in the prefecture level")
+
+plot(pref$ncampus~pref$fditota, xlab="Foreign direct investment per capita in the prefecture level", ylab = "number of campuses in the prefecture level")
+plot(pref$fditota)
+
 
 ##OLS fixed effect model
 library(plm)
-M1<- plm(ncampus ~ lpoptota+lfditota+l.gdptota+empavea, data=prefecture,index=c("cityid", "year"), model="within")
+M1<- plm(ncampus ~ l.poptota + l.fditota+l.gdptota+l.empavea+gsqua+fsqua+esqua+psqua,data = pref, index=c("cityid", "year"), model="within")
 print(summary(M1))
-#the coefficient for FDI and wage are not very reasonable for me,
+
+#####This one did not work###
+#library(glmmML)
+#M1<- glmmML(ncampus~l.poptota, data=prefecture, cluster=cityid)
+#error: yvalues must between 0 and 1;
+
+#using lfe package;
+#library(lfe)
+#MM1<- felm(ncampus ~ l.poptota + l.fditota+ l.gdptota+l.empavea,data = pref,weights = pref$phat)
+#print(summary(MM1))
+
+#using lmer package
+#library(lme4)
+#MMM1<- lmer(ncampus ~ l.poptota +(1|provid.x),data = pref,na.action = TRUE)
+#print(summary(MMM1))
+
+#using GLM to apply poisson;
+#library(MASS)
+#MMMM1<- glm(ncampus ~ l.poptota+ l.fditota+ l.gdptota + l.empavea, data = pref,na.action = TRUE)
 
 
 ##Logit model for panel data
 #library(pglm)
-#table(prefecture$dcampus)
-#M2<- pglm(dcampus ~ lpoptota+lfditota+l.gdptota+empavea, data=prefecture, effect="individual",family= binomial('probit'), model="within")
+#M2<- pglm(dcampus ~ lpoptota+fditota+l.gdptota+empavea, data=pref, effect="individual",family= binomial('probit'), model="within")
 #print(summary(M2))
 
-#library(glmmML)
-#M2<- glmmboot(lpoptota+lfditota+l.gdptota+empavea,dcampus, family= binomial(link="logit"), data=prefecture, cluster=cityid)
+
+
+#M2<- glm(dcampus ~ l.poptota|cityid+ fditota+l.gdptota+empavea, data=pref,family = binomial)
 ```
 
 ########################################################################
@@ -140,11 +185,16 @@ print(summary(M1))
 ```{r}
 #generate log values of variables(rescale)
 lpoptotc<- log(urban$poptotc)
-lfditotc<- log(urban$fditotc/urban$gdpdef)
 l.gdptotc<- log(urban$gdptotc/urban$gdpdef)
-urban<- cbind(urban, lpoptotc, lfditotc, l.gdptotc)
-M3<- plm(ncampus ~ lpoptotc+lfditotc+l.gdptotc+empavec, data=urban,index=c("cityid", "year"), model="within")
-print(summary(M3))
+urban<- cbind(urban, lpoptotc, l.gdptotc)
+#OLS regression with fixed effect
+library(plm)
+U1<- plm(ncampus ~ lpoptotc + log(fditotc+1)+ l.gdptotc+log(empavec),data = urban, index=c("cityid", "year"), effect= "individual",model="within")
+print(summary(U1))
+
+#Probt analysis
+U2<- glm(dcampus ~ l.poptotc+log(fditotc+1)+l.gdptotc+log(empavec), data=urban,family = "binomial")
+summary(U2)
 ```
 
 
