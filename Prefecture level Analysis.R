@@ -32,10 +32,12 @@ pref<- cbind(pref, l.poptota, l.fditota, l.gdptota,l.empavea, psqua, fsqua,gsqua
 #look at the scatterplot for variables.
 plot(pref$ncampus~pref$l.poptota, xlab="log of population in the prefecture level", ylab = "number of campuses in the prefecture level")
 
+#not run #lines(lowess(pref$l.poptota,pref$ncampus),col="red")
+
 plot(pref$ncampus~pref$l.gdptota, xlab="log of real GDP per capita in the prefecture level", ylab = "number of campuses in the prefecture level")
-temp<-loess(pref$ncampus~pref$l.gdptota)
-j<-order(pref$l.gdptota)
-lines(pref$l.gdptota[j],temp$fitted[j],col="red")
+#not run #temp<-loess(pref$ncampus~pref$l.gdptota)
+#not run#j<-order(pref$l.gdptota)
+#not run# lines(pref$l.gdptota[j],temp$fitted[j],col="red")
 
 
 plot(pref$ncampus~pref$empavea, xlab="Average wage in the prefecture level", ylab = "number of campuses in the prefecture level")
@@ -47,6 +49,11 @@ plot(pref$ncampus~pref$fditota, xlab="Foreign direct investment per capita in th
 library(plm)
 M1<- plm(ncampus ~ l.poptota + l.fditota+l.gdptota+l.empavea+gsqua+fsqua+esqua+psqua,data = pref, index=c("cityid", "year"), effect= "individual", model="within")
 print(summary(M1))
+
+
+G2<- glm(ncampus ~ l.poptota+log(fditota+1)+l.gdptota+l.empavea, data=pref,family =poisson(link=log), weights = pref$phat)
+summary(M2)
+
 
 #####This one did not work###
 #library(glmmML)
