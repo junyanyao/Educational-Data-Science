@@ -9,6 +9,7 @@ library(foreign)
 edat<- read.csv("~/Desktop/edsproject/data_cleaned.csv")
 dat<- read.dta("~/Desktop/edsproject/china_univ_by_municipality.dta")
 
+
 #merge two data frames by year and cityid
 total<- merge(edat, dat, by=c("cityid", "year"), all.x=TRUE, all.y=TRUE)
 

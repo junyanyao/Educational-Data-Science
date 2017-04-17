@@ -60,6 +60,7 @@ summary(M2)
 #M1<- glmmML(ncampus~l.poptota, data=prefecture, cluster=cityid)
 #error: yvalues must between 0 and 1;
 
+
 #using lfe package;
 #library(lfe)
 #MM1<- felm(ncampus ~ l.poptota + l.gdptota+ fditota, data = pref,weights = pref$phat, na.action = TRUE)
