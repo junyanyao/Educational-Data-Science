@@ -61,6 +61,7 @@ summary(M2)
 #error: yvalues must between 0 and 1;
 
 
+
 #using lfe package;
 #library(lfe)
 #MM1<- felm(ncampus ~ l.poptota + l.gdptota+ fditota, data = pref,weights = pref$phat, na.action = TRUE)
