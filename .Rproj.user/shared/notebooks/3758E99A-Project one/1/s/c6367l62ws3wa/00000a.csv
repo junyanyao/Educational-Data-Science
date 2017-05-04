@@ -1,0 +1,21 @@
+"0","v<-0
+u<-0
+for (i in 1:length(race$Hare)){
+  for (j in 1: length(race$Tortoise)){
+  tg<- as.numeric(race$Hare[i] < race$Tortoise[j])
+  ug<- as.numeric(race$Hare[i] > race$Tortoise[j])
+   v <- v+tg
+   u<- u+ug
+  }
+}
+v
+"
+"1","[1]"
+"1"," 81"
+"1","
+"
+"0","u"
+"1","[1]"
+"1"," 19"
+"1","
+"

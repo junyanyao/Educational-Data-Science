@@ -1,0 +1,5 @@
+"0","library(foreign)"
+"0","edat<- read.csv(""~/Desktop/edsproject/data_cleaned.csv"")"
+"0","dat<- read.dta(""~/Desktop/edsproject/china_univ_by_municipality.dta"")"
+"0","#merge two data frames by year and cityid"
+"0","total<- merge(edat, dat, by=c(""cityid"", ""year""), all.x=TRUE, all.y=TRUE)"

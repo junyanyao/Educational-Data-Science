@@ -1,0 +1,5 @@
+"0","library(car)
+leveneTest(race$Hare)
+"
+"2","Error in is.factor(group) : argument ""group"" is missing, with no default
+"

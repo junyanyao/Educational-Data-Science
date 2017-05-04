@@ -1,0 +1,8 @@
+"0","varh<-var(race$Hare)"
+"0","vart<-var(race$Tortoise)"
+"0","rightside <- varh+vart"
+"0","rightside"
+"1","[1]"
+"1"," 826.2257"
+"1","
+"

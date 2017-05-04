@@ -1,0 +1,2 @@
+"0"," "
+"0","aggregate(ncampus ~ provid.x, data=only2010, mean)"
