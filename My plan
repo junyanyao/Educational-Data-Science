@@ -26,3 +26,13 @@ I am checking the potential clustering solution.
 Kmeans did not work well, But the complete/single/ ward methods works well
 
 >>>>>>> a32cb3731b5cdd09bb11a56e3da690e2e471b025
+update on April 17,2017
+
+I have fixed checked the merge results. It is very good. Cannot find nothing wrong;
+
+Prefecture analysis---Both OLS with fixed effect and Logit model fits well.
+
+Urban analysis- Same thing. These results/findings are quiet different.
+
+Questions/Potential concerns for this week: Fit both model with the weight variable.
+
