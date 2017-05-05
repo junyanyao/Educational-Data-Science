@@ -12,7 +12,6 @@ peroid<- 0
 total<- cbind(total, peroid)
 total$period[total$year<= 1999]=0
 total$period[total$year>= 2000]=1
-
 #generate the change of number of campuses
 
 require(dplyr)
