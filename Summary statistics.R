@@ -6,8 +6,6 @@ total<- merge(edat, dat, by=c("cityid", "year"), all.x=TRUE, all.y=TRUE)
 
 #drop unnecessary variables
 total<- total[,-c(3,4,8,15,16,17,18,19,20,21,22,23,30,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47)]
-
-
 #caret package
 #streamline the model building and evaluation process
 #use train function to evaluate, using  resampling, the effect of model tuning parameters on performance;
