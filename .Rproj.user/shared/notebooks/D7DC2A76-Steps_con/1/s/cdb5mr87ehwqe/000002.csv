@@ -1,4 +1,0 @@
-"0","par(mfrow=c(1,2))"
-"0","plot(density(only2010$poptota))"
-"2","Error in density.default(only2010$poptota) : 'x' contains missing values
-"

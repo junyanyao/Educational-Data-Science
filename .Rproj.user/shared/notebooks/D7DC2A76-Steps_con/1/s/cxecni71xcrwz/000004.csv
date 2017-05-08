@@ -1,1 +1,0 @@
-"0","#plotmeans(ncampus~provid|year==2010, main=""Number of campuses in China 1985-2011"", n.label= FALSE, data=dat)"

@@ -1,1 +1,0 @@
-"0","aggregate(ncampus ~ citycat, data=only2010, mean)"

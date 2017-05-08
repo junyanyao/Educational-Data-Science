@@ -54,7 +54,7 @@ rgdptota<- total$gdptota/total$gdpdef
 pa<- ggplot(total, aes(rgdptota, ncampus, size = poptota, frame = year)) +
   geom_point()+geom_smooth(aes(group = year), method = "lm", show.legend = FALSE) +
   facet_wrap(~region, scales = "free")
-gganimate(pa)
+gganimate(pa,"pa.gif")
 
 
 rgdptotc<- total$gdptotc/total$gdpdef
